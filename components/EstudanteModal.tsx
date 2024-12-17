@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styles from '../app/admin/adminDashboard.module.css';
+import styles from '@/app/admin/adminDashboard.module.css';
 
 export default function EstudanteModal() {
     return (
