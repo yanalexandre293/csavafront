@@ -1,12 +1,12 @@
 'use client';
 
-import ListagemDisciplinas from "./disciplinas/ListagemDisciplinas";
+import ListagemDisciplinas from "./disciplina/ListagemDisciplinas";
 
 export default function DisciplinaModal() {
 
     return (
         <div>
-            {<ListagemDisciplinas/>}
+            {<ListagemDisciplinas />}
         </div>
     )
 }

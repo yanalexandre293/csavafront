@@ -3,8 +3,8 @@
 import Head from "next/head";
 import '@/app/globals.css';
 import { useState } from "react";
-import GerenciarDisciplinas from "@/components/disciplinas/ListagemDisciplinas";
-import GerenciarAulas from "@/components/AulaModal";
+import GerenciarDisciplinas from "@/components/disciplina/ListagemDisciplinas";
+import GerenciarAulas from "@/components/aula/ListagemAulas";
 import GerenciarProfessores from "@/components/ProfessorModal";
 import GerenciarEstudantes from "@/components/EstudanteModal";
 

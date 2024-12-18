@@ -8,7 +8,7 @@ interface Aula {
     Disciplina: Disciplina;
 }
 
-interface Disciplina {
+export interface Disciplina {
     Id: number;
     Nome: string;
     Aulas: Aula[];
@@ -29,7 +29,6 @@ export default function ListagemDisciplinas() {
         const novaDisciplinaObj = { Nome: novaDisciplina, Aulas: [] };
         axios.post('http://localhost:5147/Disciplina', novaDisciplinaObj)
             .then(response => {
-                setDisciplinas([...disciplinas, response.data]);
                 setNovaDisciplina("");
                 setGatilhoUpdate((prev) => !prev);
             })
@@ -48,7 +47,6 @@ export default function ListagemDisciplinas() {
         }else{
             axios.put(`http://localhost:5147/Disciplina/${disciplinaId}`, { ...disciplinaSelecionada, Nome: novoNome })
                 .then(res => {
-                    console.log(res);
                     setGatilhoUpdate((prev) => !prev);
                     setDisciplinaSelecionada(undefined);
                 })
@@ -73,7 +71,6 @@ export default function ListagemDisciplinas() {
         axios.get('http://localhost:5147/Disciplina')
             .then(response => {
                 setDisciplinas(response.data);
-                console.log(response.data);
             })
             .catch(error => {
                 console.log("Erro ao buscar as disciplinas!", error);
@@ -120,7 +117,7 @@ export default function ListagemDisciplinas() {
                                 key={disciplina.Id}
                                 className="border-b border-gray-200 odd:bg-gray-100 even:bg-white p-0"
                             >
-                                <td className="px-4 py-2 border-r border-gray-300">{disciplina.Id}</td>
+                                <td className="px-4 py-2 border-r border-gray-300">{"# "+disciplina.Id}</td>
                                 {disciplinaSelecionada === disciplina ? (
                                     <td className="px-4 py-2 border-r border-gray-300 ml-2 pl-0">
                                         <input
