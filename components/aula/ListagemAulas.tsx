@@ -1,7 +1,14 @@
+// components/aula/ListagemAulas.tsx
+
 import Head from "next/head";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Disciplina } from "../disciplina/ListagemDisciplinas";
+
+interface Disciplina {
+    Id: number;
+    Nome: string;
+    Aulas: Aula[];
+}
 
 interface Aula {
     Id: number;

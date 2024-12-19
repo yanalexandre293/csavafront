@@ -1,3 +1,5 @@
+// components/AulaModal.tsx
+
 'use client';
 
 import ListagemAulas from "./aula/ListagemAulas";

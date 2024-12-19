@@ -2,18 +2,11 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-interface Disciplina {
-    Id: number;
-    Nome: string;
-    Aulas: any[]; // Adaptar conforme necessário
-}
-
 interface Professor {
     Id: number;
     Nome: string;
     Email: string;
     Senha: string;
-    DisciplinasLecionadas?: Disciplina[];
 }
 
 export default function ListagemProfessores() {
@@ -24,7 +17,6 @@ export default function ListagemProfessores() {
         Nome: "",
         Email: "",
         Senha: "",
-        DisciplinasLecionadas: []
     });
     const [professorSelecionado, setProfessorSelecionado] = useState<Professor | undefined>(undefined);
     const [professorEditado, setProfessorEditado] = useState<Professor>({
@@ -32,7 +24,6 @@ export default function ListagemProfessores() {
         Nome: "",
         Email: "",
         Senha: "",
-        DisciplinasLecionadas: []
     });
 
     const adicionarProfessor = () => {
@@ -42,7 +33,7 @@ export default function ListagemProfessores() {
         }
         axios.post('http://localhost:5147/Professor', {Nome: novoProfessor.Nome, Email: novoProfessor.Email, Senha: novoProfessor.Senha})
             .then(() => {
-                setNovoProfessor({ Id: 0, Nome: "", Email: "", Senha: "", DisciplinasLecionadas: [] });
+                setNovoProfessor({ Id: 0, Nome: "", Email: "", Senha: ""});
                 setGatilhoUpdate(prev => !prev);
             })
             .catch(error => {
@@ -60,7 +51,7 @@ export default function ListagemProfessores() {
         if (!professorSelecionado) {
             const professor = professores.find(p => p.Id === professorId);
             setProfessorSelecionado(professor);
-            setProfessorEditado(professor || { Id: 0, Nome: "", Email: "", Senha: "", DisciplinasLecionadas: [] });
+            setProfessorEditado(professor || { Id: 0, Nome: "", Email: "", Senha: ""});
         } else if (
             professorEditado?.Nome === professorSelecionado?.Nome &&
             professorEditado?.Email === professorSelecionado?.Email &&
@@ -76,6 +67,7 @@ export default function ListagemProfessores() {
                 .catch(error => console.log("Erro ao editar o professor!", error));
         }
     };
+
 
     useEffect(() => {
         axios.get('http://localhost:5147/Professor')
@@ -177,13 +169,6 @@ export default function ListagemProfessores() {
                                         onClick={() => removerProfessor(professor.Id)}
                                     >
                                         Remover
-                                    </button>
-
-                                    <button
-                                        className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 "
-                                        
-                                    >
-                                        Vincular
                                     </button>
                                 </td>
                             </tr>

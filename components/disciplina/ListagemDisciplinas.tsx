@@ -8,7 +8,7 @@ interface Aula {
     Disciplina: Disciplina;
 }
 
-export interface Disciplina {
+interface Disciplina {
     Id: number;
     Nome: string;
     Aulas: Aula[];
