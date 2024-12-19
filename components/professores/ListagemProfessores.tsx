@@ -173,10 +173,17 @@ export default function ListagemProfessores() {
                                         Editar
                                     </button>
                                     <button
-                                        className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                                        className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 mr-2"
                                         onClick={() => removerProfessor(professor.Id)}
                                     >
                                         Remover
+                                    </button>
+
+                                    <button
+                                        className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 "
+                                        
+                                    >
+                                        Vincular
                                     </button>
                                 </td>
                             </tr>
