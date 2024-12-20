@@ -1,7 +1,7 @@
 "use client";
 
-import AulasDisciplina from "@/components/estudantes/AulasDisciplina";
-import DisciplinasEstudantes from "@/components/estudantes/DisciplinasEstudantes";
+import AulasDisciplina from "@/components/aula/AulasDisciplina";
+import DisciplinasEstudantes from "@/components/disciplina/DisciplinasEstudantes";
 import Head from "next/head";
 import { useState } from "react";
 

@@ -1,4 +1,11 @@
+import { useState } from "react";
+import VideoModal from "./VideoAulaModal";
+
 export default function AulasDisciplina({ aulas }: { aulas: any[] }) {
+    const [modalVideoAula, setModalVideoAula] = useState(false);
+
+
+
     return (
         <div className="p-6">
             <h1 className="text-3xl font-semibold mb-4">Aulas da Disciplina</h1>
@@ -13,11 +20,14 @@ export default function AulasDisciplina({ aulas }: { aulas: any[] }) {
                         <h2 className="text-xl font-semibold">{aula.Nome}</h2>
                         <button 
                             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 ease-in-out"
+                            onClick={() => setModalVideoAula(true)}
                         >
                             Acessar Aula
                         </button>
+                        {modalVideoAula && <VideoModal videoUrl={aula.Link} onClose={() => setModalVideoAula(false)} />}
                     </div>
                 ))}
+
             </div>
         </div>
     );

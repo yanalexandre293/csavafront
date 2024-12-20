@@ -15,30 +15,32 @@ interface Aula {
     Nome: string;
     DisciplinaId: number;
     Disciplina: Disciplina;
+    Link: string;
 }
 
 export default function ListagemAulas() {
     const [aulas, setAulas] = useState<Aula[]>([]);
     const [gatilhoUpdate, setGatilhoUpdate] = useState(false);
-    const [novaAula, setNovaAula] = useState<Aula>({Id: 0, Nome: "", DisciplinaId: 0, Disciplina: {Id: 0, Nome: "", Aulas: []}});
+    const [novaAula, setNovaAula] = useState<Aula>({Id: 0, Nome: "", DisciplinaId: 0, Disciplina: {Id: 0, Nome: "", Aulas: []}, Link: ""});
     const [disciplinas, setDisciplinas] = useState<Disciplina[]>([]);7
     const [aulaSelecionada, setAulaSelecionada] = useState<Aula | undefined>(undefined);
-    const [aulaEditada, setAulaEditada] = useState<Aula>({Id: 0, Nome: "", DisciplinaId: 0, Disciplina: {Id: 0, Nome: "", Aulas: []}});
+    const [aulaEditada, setAulaEditada] = useState<Aula>({Id: 0, Nome: "", DisciplinaId: 0, Disciplina: {Id: 0, Nome: "", Aulas: []}, Link: ""});
 
     const adicionarAula = () => {
         setNovaAula(novaAula);
-        if (novaAula.Nome.trim() === "" || novaAula.DisciplinaId <= 0) {
-            alert("O nome da aula e a disciplina não podem estar vazios!");
+        if (novaAula.Nome.trim() === "" || novaAula.DisciplinaId <= 0 || novaAula.Link.trim() === "") {
+            alert("Os dados não podem estar vazios!");
             return;
         }
-        const novaAulaObj = { Nome: novaAula.Nome, DisciplinaId: novaAula.DisciplinaId };
+        const novaAulaObj = { Nome: novaAula.Nome, DisciplinaId: novaAula.DisciplinaId, Link: novaAula.Link };
         axios.post('http://localhost:5147/Aula', novaAulaObj)
             .then(response => {
                 setNovaAula({
                     Id: 0,
                     Nome: "",
                     DisciplinaId: 0,
-                    Disciplina: { Id: 0, Nome: "", Aulas: [] }
+                    Disciplina: { Id: 0, Nome: "", Aulas: [] },
+                    Link: "",
                 });
                 setGatilhoUpdate((prev) => !prev);
             })
@@ -62,7 +64,7 @@ export default function ListagemAulas() {
         if (aulaSelecionada == undefined) {
             const aula = aulas.find(aula => aula.Id === aulaId);
             setAulaSelecionada(aula);
-            setAulaEditada(aula || { Id: 0, Nome: "", DisciplinaId: 0, Disciplina: { Id: 0, Nome: "", Aulas: [] } });
+            setAulaEditada(aula || { Id: 0, Nome: "", DisciplinaId: 0, Disciplina: { Id: 0, Nome: "", Aulas: [] }, Link: "" });
         } else if (aulaEditada?.Nome === aulaSelecionada?.Nome && aulaEditada?.DisciplinaId === aulaSelecionada?.DisciplinaId) {
             setAulaSelecionada(undefined);
         } else {
@@ -117,6 +119,13 @@ export default function ListagemAulas() {
                         className="px-4 py-2 border border-gray-300 rounded-md w-64"
                         onChange={(e) => setNovaAula({ ...novaAula, Nome: e.target.value })}
                     />
+                    <label className="ml-4 mr-2">Link:</label>
+                    <input
+                        value={novaAula.Link}
+                        type="text"
+                        className="px-4 py-2 border border-gray-300 rounded-md w-64"
+                        onChange={(e) => setNovaAula({ ...novaAula, Link: e.target.value })}
+                    />
                     <label className="ml-4 mr-2">Disciplina:</label>
                     <select
                         value={novaAula.DisciplinaId}
@@ -131,20 +140,21 @@ export default function ListagemAulas() {
                         ))}
                     </select>
                     <button
-                        className="ml-4 px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                        className="ml-4 px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 w-40"
                         onClick={adicionarAula}
                     >
-                        Adicionar Nova Aula
+                        Adicionar
                     </button>
                 </div>
 
                 <table className="mt-8 table-auto w-full border-collapse shadow-md bg-white">
                     <thead>
                         <tr className="bg-gray-800 text-white">
-                            <th className="px-4 py-2 border-r border-gray-300 w-20">ID</th>
-                            <th className="px-4 py-2 border-r border-gray-300 w-80">Nome</th>
-                            <th className="px-4 py-2 border-r border-gray-300 w-80">Disciplina</th>
-                            <th className="px-4 py-2">Ações</th>
+                            <th className="px-4 py-2 border-r border-gray-300">ID</th>
+                            <th className="px-4 py-2 border-r border-gray-300">Nome</th>
+                            <th className="px-4 py-2 border-r border-gray-300">Disciplina</th>
+                            <th className="px-4 py-2 border-r border-gray-300">Link</th>
+                            <th className="px-4 py-2 ">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -164,6 +174,18 @@ export default function ListagemAulas() {
                                         />
                                     ) : (
                                         aula.Nome
+                                    )}
+                                </td>
+                                <td className="px-4 py-2 border-r border-gray-300">
+                                    {aulaSelecionada == aula ? (
+                                        <input
+                                            value={aulaEditada?.Link || ""}
+                                            type="text"
+                                            className="px-4 py-2 border border-gray-300 rounded-md w-64"
+                                            onChange={(e) => setAulaEditada({ ...aulaEditada, Link: (e.target.value) })}
+                                        />
+                                    ) : (
+                                        <a href={aula.Link}>Link</a>
                                     )}
                                 </td>
                                 <td className="px-4 py-2 border-r border-gray-300">
