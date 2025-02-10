@@ -2,6 +2,7 @@
 
 import AulasDisciplina from "@/components/aula/AulasDisciplina";
 import DisciplinasEstudantes from "@/components/disciplina/DisciplinasEstudantes";
+import { signOut } from "next-auth/react";
 import Head from "next/head";
 import { useState } from "react";
 
@@ -51,7 +52,7 @@ export default function EstudanteDashboard() {
                 </button>
                 <button
                     className="mt-2 px-6 py-2 bg-gray-600 text-white rounded-md w-full text-left"
-                    onClick={() => setComponenteAtivo("sair")}
+                    onClick={() => signOut()}
                 >
                     Sair
                 </button>
@@ -65,12 +66,6 @@ export default function EstudanteDashboard() {
                     <div>
                         <h1 className="text-3xl font-semibold">Perfil</h1>
                         <p className="mt-4 text-lg">Aqui você pode visualizar e editar suas informações pessoais.</p>
-                    </div>
-                )}
-                {componenteAtivo === "sair" && (
-                    <div>
-                        <h1 className="text-3xl font-semibold">Sair</h1>
-                        <p className="mt-4 text-lg">Você foi desconectado. Volte sempre!</p>
                     </div>
                 )}
             </div>
